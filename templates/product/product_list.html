@@ -1,0 +1,105 @@
+
+{% extends 'product/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    
+    <!-- :::::: Start Main Container Wrapper :::::: -->
+    <main id="main-container" class="main-container">
+        <div class="container">
+            <div class="row">
+                <!-- Start Rightside - Content -->
+                <div class="col-12">
+                    
+                    {% include 'include/main_baner.html' %}
+
+                    <div class="section-content" style="margin-top: 30px; margin-bottom: 30px; border-bottom: 2px solid #666;">
+                        <h5 class="section-content__title">{{category}}</h5>
+                    </div>
+
+                    <!-- ::::::  Start Sort Box Section  ::::::  -->
+                    <div class="sort-box m-tb-40">
+    
+                        <div class="sort-box-item d-flex align-items-center flex-warp">
+                            {% include 'include/search.html' %}
+                        </div>
+
+                        <div class="sort-box-item">
+                            <span>{{elements}} - товара</span>
+                        </div>
+                    </div> <!-- ::::::  Start Sort Box Section  ::::::  -->
+                    {{ratings}}
+                    <div class="product-tab-area">
+                        <div class="tab-content tab-animate-zoom">
+                            <div class="tab-pane show active shop-grid" id="sort-grid">
+                                <div class="row">
+                                    {% for product in products %}
+                                    <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-12">
+                                        <!-- Start Single Default Product -->
+                                        <div class="product__box product__default--single text-center">
+                                            <!-- Start Product Image -->
+                                            <div class="product__img-box  pos-relative">
+                                                <a href="{{product.get_absolute_url}}" class="product__img--link">
+                                                    <img class="product__img img-fluid" src="{{ product.poster.url }}" alt="">
+                                                </a>
+                                                <!-- Start Procuct Label -->
+                                                {% if product.persent and product.status %}
+                                                    <span class="product__label product__label--sale-out" style='margin-left:70px'>{{ product.status }}</span>
+                                                    <span class="product__label product__label--sale-dis">{{product.persent}}%</span>
+                                                {% else %}
+                                                    {% if product.persent %}
+                                                        <span class="product__label product__label--sale-dis">{{ product.persent }}%</span>
+                                                    {% endif %}
+                                                    {% if product.status %}
+                                                        <span class="product__label product__label--sale-out">{{ product.status }}</span>
+                                                    {% endif %}
+                                                {% endif %}  
+                                                <!-- End Procuct Label -->  
+                                                <ul class="product__action--link pos-absolute">
+                                                   
+                                                    <li><a href="{{product.get_absolute_url}}" ><i class="icon-eye"></i></a></li>
+                                                </ul>                                              
+                                            </div> <!-- End Product Image -->
+                                            
+                                            <!-- Start Product Content -->
+                                            <div class="product__content m-t-20">
+                                                <ul class="product__review">
+                                                    <span>
+                                                        {% for rating in product.get_rating.star_on %}
+                                                            <label class="rating_on"></label>
+                                                        {% endfor %}
+                                                        {% for rating in product.get_rating.star_off %}
+                                                            <label class="rating_off"></label>
+                                                        {% endfor %}  
+                                                    </span>
+                                                    
+                                                </ul>
+                                                <a href="{{product.get_absolute_url}}" class="product__link">{{ product.title }}</a>
+                                                <div class="product__price m-t-5">
+                                                    {% if product.sale %}
+                                                        <span class="product__price">{{ product.sale }} грн <del>{{product.retail}} грн</del></span>
+                                                    {% else %}
+                                                        <span class="product__price">{{ product.retail }} грн</span>
+                                                    {% endif %}
+                                                </div>
+                                               
+                                            </div> <!-- End Product Content -->
+                                        </div> <!-- End Single Default Product -->
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Start pagination -->
+                    {% include "include/pagination.html" %}
+                    <!-- End pagination -->
+
+                </div>  <!-- Start Rightside - Content -->
+            </div>
+        </div>
+    </main>  <!-- :::::: End MainContainer Wrapper :::::: -->
+
+{% endblock content %}

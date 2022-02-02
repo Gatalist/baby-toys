@@ -1,0 +1,31 @@
+{% load static %}
+<div class="header__mobile mobile-header--1 d-block d-lg-none p-tb-20">
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-12 d-flex align-items-center justify-content-between">
+                <ul class="header__mobile--leftside d-flex align-items-center justify-content-start">
+                    <li>
+                        <div class="header__mobile-logo">
+                            <a href="{% url 'index' %}" class="header__mobile-logo-link">
+                                <img src="{% static 'img/logo/logo-2.png' %}" alt="" class="header__mobile-logo-img">
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <!-- Start User Action -->
+                <ul class="header__mobile--rightside header__user-action-icon  d-flex align-items-center justify-content-end"> 
+                    <!-- Start like_basket -->
+                    {% include "include/like_basket.html" %}
+                    <!-- End like_basket -->
+                    <li>
+                        <a href="#offcanvas-mobile-menu" class="offcanvas-toggle">
+                            <i class="far fa-bars"></i>
+                        </a>
+                    </li>
+
+                </ul>   <!-- End User Action -->
+            </div>
+        </div>
+        
+    </div>
+</div>

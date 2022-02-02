@@ -1,0 +1,98 @@
+
+{% extends 'product/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <!-- ::::::  Start  Main Container Section  ::::::  -->
+    <main id="main-container" class="main-container">
+        <div class="container">
+            <div class="row">
+                <div class="section-content" style="margin-top: 30px; margin-bottom: 30px; border-bottom: 2px solid #666;">
+                   
+                </div>
+                <!-- Start Client Shipping Address -->
+                <div class="col-lg-7">
+                    <div class="section-content">
+                        <h5 class="section-content__title">Контактные данные</h5>
+                    </div>
+                    <form method="post" class="form-box">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-box__single-group">
+                                    <label for="form-first-name">Имя</label>
+                                    <input type="text" id="form-first-name" name="{{form.firstname.html_name}}" value="{{request.POST.firstname}}" id="firstname">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-box__single-group">
+                                    <label for="form-last-name">Фамилия</label>
+                                    <input type="text" name="{{form.lastname.html_name}}" value="{{request.POST.lastname}}" id="lastname"> 
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-box__single-group">
+                                    <label for="form-company-name">Город</label>
+                                    <input type="text" name="{{form.city.html_name}}" value="{{request.POST.city}}" id="city">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-box__single-group">
+                                    <label for="form-phone">Телефон</label>
+                                    <input type="text" name="{{form.phone.html_name}}" id="phone"
+                                    value="{{request.POST.phone}}"
+                                    >
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-box__single-group">
+                                    <label for="form-email">Email</label>
+                                    <input class="form-control" type="email" name="{{form.email.html_name}}" value="{{request.POST.email}}" id="email">
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="text-center" style="margin-top: 30px;">
+                            <button class="btn btn--small btn--radius btn--green btn--green-hover-black btn--uppercase font--bold" type="submit">Оформить заказ</button>
+                        </div>
+                    </form> 
+                </div> <!-- End Client Shipping Address -->
+                
+                <!-- Start Order Wrapper -->
+                <div class="col-lg-5">
+                    <div class="your-order-section">
+                        <div class="section-content">
+                            <h5 class="section-content__title">Ваш заказ</h5>
+                        </div>
+                        <div class="your-order-box gray-bg m-t-40 m-b-30">
+                            <div class="your-order-product-info">
+                                <div class="your-order-top d-flex justify-content-between">
+                                    <h6 class="your-order-top-left font--bold">Товар</h6>
+                                    <h6 class="your-order-top-right font--bold">Сумма</h6>
+                                </div>
+                                <ul class="your-order-middle">
+                                    {% for product in products_in_basket %}
+                                        <li class="d-flex justify-content-between">
+                                            <span class="your-order-middle-left font--semi-bold">{{product.product}} X {{product.nmb}}</span>
+                                            <span class="your-order-middle-right font--semi-bold">{{product.total_price}} грн</span>
+                                        </li>
+                                    {% endfor %}
+                                    
+                                </ul>
+                                <div class="your-order-bottom d-flex justify-content-between">
+                                    <h5 class="your-order-total-left font--bold">Сумма заказа</h5>
+                                    <h5 class="your-order-total-right font--bold">{{order_sum}} грн</h5>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div> <!-- End Order Wrapper -->
+            </div>
+        </div>
+    </main> <!-- ::::::  End  Main Container Section  ::::::  -->
+{% endblock content %}

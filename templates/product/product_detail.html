@@ -1,0 +1,316 @@
+
+{% extends 'product/base.html' %}
+
+{% load include_tag %}
+{% load static %}
+
+{% block content %}
+
+    <!-- :::::: Start Main Container Wrapper :::::: -->
+    <main id="main-container" class="main-container">
+
+        <!-- Start Product Details Gallery -->
+        <div class="product-details">
+            <div class="container">
+               
+                <div class="row">
+                    <div class="col-md-5">
+                       
+                        <div class="product-gallery-box product-gallery-box--default m-b-60">
+                           
+                            <div class="product-image--large product-image--large-horizontal">
+                                <img class="img-fluid" id="img-zoom" src="{{ product.poster.url }}" 
+                                     data-zoom-image="{{ product.poster.url }}" alt="">
+                            </div>
+                            <div id="gallery-zoom" class="product-image--thumb product-image--thumb-horizontal pos-relative">
+                                {% for image in product.productimage_set.all %}
+                                <a class="zoom-active" data-image="{{ image.image.url }}" data-zoom-image="{{ image.image.url }}">
+                                    <img class="img-fluid" src="{{ image.image.url }}" alt="">
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-7">
+                        <div class="product-details-box m-b-60">
+                            <h4 class="font--regular m-b-20">{{product.title}}</h4>
+                        
+                            {% if rating %}
+                                <span>
+                                    {% for rating in product.get_rating.star_on %}
+                                        <label class="rating_on"></label>
+                                    {% endfor %}
+                                    {% for rating in product.get_rating.star_off %}
+                                        <label class="rating_off"></label>
+                                    {% endfor %}
+                                </span>
+                                
+                                <span class="rating" style="margin-left: 5px; margin-bottom: 6px;">{{ product.get_rating.star }} / ваша оценка {{rating}}</span>
+                            {% else %}
+                                <form action="{% url 'add_rating' %}" method="post" name="rating">
+                                    {% csrf_token %}
+                                    <input type="hidden" value="{{ product.pk }}" name="product">
+                                    <span class="rating">
+                                        {% for k, v in star_form.fields.star.choices %}
+                                            <input id="rating{{ v }}" type="radio" name="star"
+                                                value="{{ k }}">
+                                            <label for="rating{{ v }}">{{ k }}</label>
+                                        {% endfor %}
+                                    </span>
+                                    <span class="rating" style="margin-left: 5px; margin-bottom: 8px;">{{product.get_rating.star}}</span>
+                                </form>
+                            {% endif %}
+                            
+                            {% if product.sale %}
+                                <div class="product__price m-t-5">
+                                    <span class="product__price product__price--large">{{product.sale}} грн<del>{{product.retail}} грн</del></span>
+                                    <span class="product__tag m-l-15 btn--tiny btn--green">{{ product.persent }}%</span>
+                                </div>
+                            {% else %}
+                                <div class="product__price m-t-5">
+                                    <span class="product__price product__price--large">{{product.retail}} грн</del></span>
+                                </div>
+                            {% endif %}
+                            <div class="product-var p-tb-30">
+                            {% if product.quantity %}
+                                <div class="product__stock m-b-20">
+                                    <span class="product__stock--in"><i class="fas fa-check-circle"></i> {{product.quantity}}  в наличии</span>
+                                </div>
+                            {% endif %}
+                                <div class="product-quantity product-var__item">
+                                    <ul class="product-modal-group">
+                                        <li><a href="#modalSizeGuide" data-toggle="modal"  class="link--gray link--icon-left"><i class="fal fa-money-check-edit"></i>Оформление</a></li>
+                                        <li><a href="#modalShippinginfo" data-toggle="modal"  class="link--gray link--icon-left"><i class="fal fa-truck-container"></i>Доставка</a></li>
+                                        <li><a href="#modalProductAsk" data-toggle="modal"  class="link--gray link--icon-left"><i class="far fa-life-ring"></i>Возврат</a></li>
+                                    </ul>
+                                </div>
+
+                                    <div class="product-quantity product-var__item d-flex align-items-center">
+                                        <form class="quantity-scale" action="{% url 'basket_adding' %}" id="send_product_basked" >
+                                            {% csrf_token %}
+                                            <span class="product-var__text">шт. </span>
+                                           
+                                            <input type="number" id="number" value="1" name="number" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                            
+                                            <button
+                                            style="margin-left: 30px;"
+                                            class="btn btn--round btn--round-size-small btn--green btn--green-hover-black"
+                                            type="submit"
+                                            id="btn_form_product_add"
+                                            data-url="{{product.get.absolute_url}}"
+                                            data-name="{{product.title}}"
+                                            data-price="{{product.sale}}"
+                                            data-id="{{product.id}}"
+                                            data-img="{{product.poster.url}}"
+                                            class="offcanvas-toggle"
+                                            style="margin-top: 10px;">
+                                            <i class="icon-shopping-cart"></i>
+                                            </button>
+                                        </form>  
+                                        <form class="like_product_detail" action="{% url 'product_likes' %}">
+                                            {% csrf_token %}
+                                            <button
+                                                type="submit"
+                                                class="btn btn--round btn--round-size-small btn--green btn--green-hover-black"
+                                                style="margin-left: 20px; margin-top: 25px;"
+                                                data-id="{{product.id}}">
+                                                <i class="fas fa-heart"></i>
+                                            </button>  
+                                        </form>
+                                    </div>
+                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div><!-- End Product Details Gallery -->
+
+        <!-- Start Product Details Tab -->
+        <div class="product-details-tab-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="product-details-content">
+                            <ul class="tablist tablist--style-black tablist--style-title tablist--style-gap-30 nav">
+                                <li><a class="nav-link active" data-toggle="tab" href="#product-desc">Описание</a></li>
+                                <li><a class="nav-link" data-toggle="tab" href="#product-dis">Характеристики</a></li>
+                            </ul>
+                            <div class="product-details-tab-box">
+                                <div class="tab-content">
+                                    <!-- Start Tab - Product Description -->
+                                    <div class="tab-pane show active" id="product-desc">
+                                        <div class="para__content">
+                                            {{product.description}}
+                                        </div>    
+                                    </div>  <!-- End Tab - Product Description -->
+
+                                    <!-- Start Tab - Product Details -->
+                                    <div class="tab-pane" id="product-dis">
+                                        <div class="product-dis__content">
+                                            <div class="table-responsive-md">
+                                                <table class="product-dis__list table table-bordered">
+                                                    <tbody>
+                                                    {% if product.size %}
+                                                        <tr>
+                                                            <td class="product-dis__title">Размер</td>
+                                                            <td class="product-dis__text">{{product.size}}</td>
+                                                        </tr>
+                                                    {% endif %}
+                                                    {% if product.material %}
+                                                        <tr>
+                                                            <td class="product-dis__title">Материал</td>
+                                                            <td class="product-dis__text">{{product.material}}</td>
+                                                        </tr>
+                                                    {% endif %}    
+                                                    {% if product.country %}
+                                                        <tr>
+                                                            <td class="product-dis__title">Страна</td>
+                                                            <td class="product-dis__text">{{product.country}}</td>
+                                                        </tr>
+                                                    {% endif %}    
+                                                    {% if product.manufactures %}
+                                                        <tr>
+                                                            <td class="product-dis__title">Производитель</td>
+                                                            <td class="product-dis__text">{{product.manufactures}}</td>
+                                                        </tr>
+                                                    {% endif %}    
+                                                    {% if product.packaging %}
+                                                        <tr> 
+                                                            <td class="product-dis__title">Упаковка</td>
+                                                            <td class="product-dis__text">{{product.packaging}}</td>
+                                                        </tr>
+                                                    {% endif %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    <!-- End Tab - Product Details -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <!-- End Product Details Tab -->
+        
+        <!-- Start Tab - Product Review -->
+        <div class="product-details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="tab-pane " id="product-review">
+                            <!-- Start Add Review Form-->
+                            <div class="review-form m-t-40">
+                                <div class="section-content">
+                                    <h6 class="font--bold text-uppercase">Добавить отзыв</h6>
+                                </div>
+                                <form class="form-box" action="{% url 'add_review' product.id %}" method="post" id="formReview">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="parent" id="contactparent" value="">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-box__single-group">
+                                                <label for="form-name">Имя*</label>
+                                                <input type="text" id="form-name" placeholder="Введите ваш имя" name='name'>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-box__single-group">
+                                                <label for="form-email">Email*</label>
+                                                <input type="email" id="form-email" placeholder="Введите ваш email" required name='email'>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-box__single-group">
+                                                <labe>Отзыв*</labe>
+                                                <textarea id="contactcomment" cols="30" rows="5" placeholder="Напишите ваш отзыв" name='text'></textarea>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-12" style="margin-top:15px; margin-bottom:30px">
+                                            <button class="btn btn--block btn--long btn--radius-tiny btn--green btn--green-hover-black text-uppercase m-r-35" type="submit">Отправить</button>
+                                        </div>
+                                        
+                                    </div>
+                                </form>
+                            </div> 
+                            <!-- End Add Review Form- -->
+                            <span class="product-var__text">Отзывов: {{ product.get_review.count }}</span>
+                            <hr>
+                            <!-- Start - Review Comment -->
+                            <ul class="comment">
+                                <!-- Start - Review Comment list-->
+                                {% for review in product.get_review %}
+                                <li class="comment__list">
+                                    <div class="comment__wrapper">
+                                        <div class="comment__img">
+                                            <img src="{% static 'img/user.png' %}" alt=""> 
+                                        </div>
+                                        <div class="comment__content">
+                                            <div class="comment__content-top">
+                                                <div class="comment__content-left">
+                                                    <h6 class="comment__name">{{review.name}}</h6>
+                                                   
+                                                </div>   
+                                                <div class="comment__content-right">
+                                                    <a href="#formReview" onclick="addReview('{{ review.name }}', '{{ review.id }}')" class="link--gray link--icon-left m-b-5"><i class="fas fa-reply"></i>Ответить</a>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="para__content">
+                                                <p class="para__text">{{review.text}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    {% for rew in review.reviews_set.all %}
+                                    <!-- Start - Review Comment Reply-->
+                                    <ul class="comment__reply">
+                                        <li class="comment__reply-list">
+                                            <div class="comment__wrapper">
+                                                <div class="comment__img">
+                                                    <img src="{% static 'img/user.png' %}" alt=""> 
+                                                </div>
+                                                <div class="comment__content">
+                                                    <div class="comment__content-top">
+                                                        <div class="comment__content-left">
+                                                            <h6 class="comment__name">{{ rew.name }}</h6>
+                                                        </div>   
+                                                        <div class="comment__content-right">
+                                                            <a href="#formReview" onclick="addReview('{{ review.name }}', '{{ review.id }}')" class="link--gray link--icon-left m-b-5"><i class="fas fa-reply"></i>Ответить</a>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="para__content">
+                                                        <p class="para__text">{{ rew.text }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul> 
+                                    <!-- End - Review Comment Reply-->
+                                    {% endfor %}
+                                </li> <!-- End - Review Comment list-->
+                                {% endfor %}
+                                <!-- End - Review Comment list-->
+                            </ul>  
+                            <!-- End - Review Comment -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Start Tab - Product Review -->
+
+    </main>  
+    <!-- :::::: End MainContainer Wrapper :::::: -->
+    
+    {% include "include/modal.html" %}
+    {% endblock content %}

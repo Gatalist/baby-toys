@@ -1,0 +1,61 @@
+{% load include_tag %}
+{% load mptt_tags %}
+
+<div id="offcanvas-mobile-menu" class="offcanvas offcanvas-mobile-menu">
+    <div class="offcanvas__top">
+        <span class="offcanvas__top-text"></span>
+        <button class="offcanvas-close"><i class="fal fa-times"></i></button>
+    </div>
+    <div class="offcanvas-inner">
+        <!-- Start Search -->
+        {% include "include/search.html" %}
+        <!-- End Search -->
+        <!-- Start Mobile User Action -->
+        <ul class="header__user-action-icon m-tb-15 text-center">
+            <!-- Start like_basket -->
+            {% include "include/like_basket.html" %}
+            <!-- End like_basket -->
+        </ul>
+        <!-- End Mobile User Action -->
+        <div class="offcanvas-menu">
+            <ul>
+                <li><a href="{% url 'index' %}"><span>Главная</span></a></li>
+                <li>
+                    <a href="#"><span>Каталог</span></a>
+                    <ul class="sub-menu">
+                        {% show_menu as category_list %}
+                        {% recursetree category_list %}
+                            <li>
+                                {% if node.is_leaf_node %}
+                                    <a href=" {{ node.get_absolute_url }}" style="margin-left: 10px;"> {{ node.name }}</a>
+                                {% endif %}
+                                {% if not node.is_leaf_node %}                                
+                                    <a href="#" style="margin-left: 10px;"> {{ node.name }}</a>
+                                    <ul class="sub-menu" style="margin-left: 10px;">
+                                        {{ children }}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endrecursetree %}
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><span>Новинки</span></a>
+                    <ul class="sub-menu" style="margin-left: 10px;">
+                        <li><a href="{% url 'all_new' %}">Поступления за 14 дней</a></li>
+       
+                        {% get_date_list_menu as dates %} 
+                        {% for date in dates %}
+                            <li><a href="{% url 'day_new' date %}">Поступление {{ date }}</a></li>
+                        {% endfor %} 
+                    </ul>
+                </li>
+                <li><a href="{% url 'news' %}">Новости</a></li>
+                <li><a href="">О нас</a></li>
+            </ul>
+        </div>
+    </div>
+    <ul class="offcanvas__social-nav m-t-50">
+        <li class="offcanvas__social-list"><a href="https://www.instagram.com/baby.toys1983/" class="offcanvas__social-link"><i class="fab fa-instagram"></i></a></li>
+    </ul>
+</div>

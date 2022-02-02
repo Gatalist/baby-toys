@@ -1,0 +1,8 @@
+<form class="newsletter__form" action="{% url 'contact' %}" method="post">
+    {% csrf_token %}
+    <div class="newsletter__form-content pos-relative">
+        <label class="pos-absolute" for="newsletter-mail"><i class="icon-mail"></i></label>
+        {{ contact_form }}
+        <button class="text-uppercase pos-absolute" type="submit">Подписаться</button>
+    </div>
+</form>

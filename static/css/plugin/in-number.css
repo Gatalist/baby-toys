@@ -1,0 +1,54 @@
+/***********
+Quantity CSS - Style !
+*************/
+.value-button {
+  display: inline-block;
+  margin: 0px;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.value-button:hover {
+  cursor: pointer;
+}
+
+form.quantity-scale #decrease,
+form.modal-quantity-scale #modal-decrease {
+  margin-right: -4px;
+}
+
+form.quantity-scale #increase,
+form.modal-quantity-scale #modal-increase {
+  margin-left: -4px;
+}
+
+form.quantity-scale #input-wrap,
+form.modal-quantity-scale #modal-input-wrap {
+  margin: 0px;
+  padding: 0px;
+}
+
+input#number,
+input#modal-number {
+  text-align: center;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  margin: 0px;
+  width: 100px;
+  height: 40px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+

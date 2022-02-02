@@ -1,0 +1,16 @@
+<li class="offcanvas-add-cart__list pos-relative d-flex align-items-center justify-content-between">
+    <div class="offcanvas-add-cart__content d-flex  align-items-start m-r-10">
+        <div class="offcanvas-add-cart__img-box pos-relative">
+            <a href="{{ product.product.get_absolute_url }}" class="offcanvas-add-cart__img-link img-responsive">
+                <img style="width: 100px" src="{{ product.product.poster.url }}" alt="" class="add-cart__img">
+            </a>
+            <span class="offcanvas-add-cart__item-count pos-absolute">{{ product.nmb }}x</span>
+        </div>
+        <div class="offcanvas-add-cart__detail" style="width: 150px">
+            <a href="{{ product.product.get_absolute_url }}" class="offcanvas-add-cart__link"><b>{{ product.product }}</b></a>
+            <span class="offcanvas-add-cart__item" style="color: #43b5f4;">цена {{ product.price_per_item }} грн</span>
+            <span class="offcanvas-add-cart__sum" style="color: #89c74a;">сумма {{ product.total_price }} грн</span>
+        </div>
+    </div>
+    <button type="submit" class="offcanvas-add-cart__item-dismiss" data-id="{{product.id}}" style="color: red"><i class="fal fa-times"></i></button>
+</li>

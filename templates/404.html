@@ -1,0 +1,34 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<!-- :::::: Start Main Container Wrapper :::::: -->
+<main id="main-container" class="main-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-10 offset-sm-1 col-md-10 offset-md-1 col-lg-6 offset-lg-3">
+                <div class="error-section-top text-center">
+                    <h1>404</h1>
+                    <h4 class="m-b-20">Упс! Ошибка 404</h4>
+                    <h5 class="font--light">Извините, но страница, которую вы ищете, не существует!</h5>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
+                <div class="page-not-found text-center">
+                    <div class="form-box__single-group d-flex align-items-center pos-relative m-b-30">
+                        {% include 'include/search' %}
+                    </div>
+                    <a href="{% url 'index' %}" class="btn btn--icon-left btn--small btn--radius-tiny btn--green btn--green-hover-black font--bold text-capitalize m-t-20">На главную</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>  
+<!-- :::::: End MainContainer Wrapper :::::: -->
+
+{% endblock content %}
+
