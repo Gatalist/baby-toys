@@ -1,18 +1,14 @@
-from django.shortcuts import render, redirect, get_object_or_404
-
+from django.shortcuts import render
 from django.http import JsonResponse
 from .models import *
 from .forms import OrderForm
 from django.contrib.auth.models import User
-
-
 from .tasks import send_mailing
 
+
 def basket_adding(request):
-    
     session_key = request.session.session_key
     data = request.POST
-
     product_id = data.get("product_id")
     product_remove = data.get("remove")
     nmb = data.get('product_num')
@@ -29,7 +25,6 @@ def basket_adding(request):
             product = ProductInBasket.objects.get(session_key=session_key, id=product_id)
             product.nmb = int(nmb)
             product.save(force_update=True)
-
         else:
             new_product, created = ProductInBasket.objects.get_or_create(session_key=session_key, product_id=product_id,
                                                                          defaults={"nmb": int(nmb), "poster": image})
@@ -39,7 +34,7 @@ def basket_adding(request):
 
     products_in_basket = ProductInBasket.objects.filter(session_key=session_key)
     products_total_nmb = products_in_basket.count()
-    
+
     return_dict = dict()
     return_dict["products_total_nmb"] = products_total_nmb
     return_dict["products"] = list()
@@ -61,34 +56,23 @@ def basket_adding(request):
     return JsonResponse(return_dict)
 
 
-
 def basket(request):
     """Список продуктов"""
     session_key = request.session.session_key
-    data = request.POST
     products_in_basket = ProductInBasket.objects.filter(session_key=session_key)
-
-    context = {"product_list": products_in_basket,}
-
-    return render(request, "product/basket_detail.html", context)
+    return render(request, "product/basket_detail.html", {"product_list": products_in_basket})
 
 
 def likes(request):
-    """Список продуктов"""
+    """ Список продуктов """
     session_key = request.session.session_key
-    data = request.POST
     products_in_likes = ProductInLikes.objects.filter(session_key=session_key)
-
-    context = {"product_list": products_in_likes,}
-
-    return render(request, "product/likes.html", context)
+    return render(request, "product/likes.html", {"product_list": products_in_likes})
 
 
 def product_likes(request):
     session_key = request.session.session_key
     data = request.POST
-    print(data)
-
     product_id = data.get("product_id")
     product_remove = data.get("remove")
 
@@ -97,11 +81,9 @@ def product_likes(request):
         product.delete()
 
     elif product_remove == 'false':
-
         if ProductInLikes.objects.filter(session_key=session_key, id=product_id):
             product = ProductInLikes.objects.get(session_key=session_key, id=product_id)
             product.save(force_update=True)
-
         else:
             new_product, created = ProductInLikes.objects.get_or_create(session_key=session_key, product_id=product_id)
             if not created:
@@ -109,63 +91,53 @@ def product_likes(request):
 
     products_in_likes = ProductInLikes.objects.filter(session_key=session_key)
     products_likes_nmb = products_in_likes.count()
-    
+
     return_dict = dict()
     return_dict["products_likes_nmb"] = products_likes_nmb
-    
     return JsonResponse(return_dict)
-
 
 
 def checkout(request):
     session_key = request.session.session_key
     products_in_basket = ProductInBasket.objects.filter(session_key=session_key)
-    
-    order_sum = 0  
+    order_sum = 0
+
     for product in products_in_basket:
         order_sum += product.total_price
-        
+
     form = OrderForm(request.POST)
-    print(request.POST)
 
     if form.is_valid():
-        print("form valide")
+        print("form valid")
         data = request.POST
         firstname = data.get('firstname')
         lastname = data.get('lastname')
         email = data.get('email')
         city = data.get('city')
         phone = data.get('phone')
-        
-        # # create user
-        user, created = User.objects.get_or_create(username=phone, defaults={'first_name':firstname})
-        # # создаем заказ
+
+        # create user
+        user, created = User.objects.get_or_create(username=phone, defaults={'first_name': firstname})
+        # create order
         order = Order.objects.create(user=user, firstname=firstname, lastname=lastname,
                                      email=email, city=city, phone=phone, status_id=1)
-        order_id = order.id
-
         order_sum = 0
         # add in order
         for product in products_in_basket:
-            
             ProductInOrder.objects.create(order=order, product=product.product, nmb=product.nmb, 
-                                          price_per_item=product.price_per_item,
-                                          total_price = product.total_price)
+                                          price_per_item=product.price_per_item, total_price=product.total_price)
             order_sum += product.total_price
-        # order send email
-        send_mailing.delay(order_id)
 
+        # order send email
+        send_mailing.delay(order.id)
 
         # clear basket
-        # for item_clear in products_in_basket:
-        #     item_clear.delete()
+        for item_clear in products_in_basket:
+            item_clear.delete()
 
-        context = {"order": order_id}
-
+        context = {"order": order.id}
         return render(request, "product/order_accepted.html", context)
-        
-
     else:
-        print("form invalide")
+        print("form invalid")
 
     return render(request, "product/checkout.html", locals())

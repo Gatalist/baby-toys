@@ -1,10 +1,7 @@
 from django.views.generic import CreateView
-
 from .models import Contact
 from .forms import ContactForm
 from .tasks import send_mailing
-
-# Create your views here.
 
 
 class ContactView(CreateView):
@@ -16,5 +13,3 @@ class ContactView(CreateView):
         form.save()
         send_mailing.delay(form.instance.email)
         return super().form_valid(form)
-    
-

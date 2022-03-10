@@ -1,8 +1,10 @@
-from django.urls import path, include
+from django.urls import path
 from . import views
+
 
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
+    path("about/", views.AboutView.as_view(), name="about"),
 
     path("category/", views.CategoryListView.as_view(), name="category_list"),
     path("category/<str:category>/", views.ProductView.as_view(), name="product_list"),
@@ -15,7 +17,3 @@ urlpatterns = [
     path("review/<int:pk>/", views.AddReview.as_view(), name="add_review"),
     path("search/", views.Search.as_view(), name="search"),
 ]
-
-
-# handler404 = 'product.views.handler404'
-# handler500 = 'my_app.views.handler500'

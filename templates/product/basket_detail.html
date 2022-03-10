@@ -1,10 +1,8 @@
 
 {% extends 'product/base.html' %}
-
 {% load static %}
 
 {% block content %}
-
     <!-- ::::::  Start  Main Container Section  ::::::  -->
     <main id="main-container" class="main-container">
         <div class="container">
@@ -14,99 +12,81 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
-
                                 <div class="section-content" style="margin-top: 30px; margin-bottom: 30px; border-bottom: 2px solid #666;">
                                     <h5 class="section-content__title">Корзина</h5>
                                 </div>
-
-
                                 {% if products_total_nmb == 0 %}
                                     {% include 'include/empty-cart.html' %}
                                 {% else %}
                                 <!-- Compare Table -->
                                 <div class="compare-table table-responsive">
-                                        <table class="table">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="first-column">Изображение</td>
-                                                    {% for product in product_list %}
-                                                        <td class="product-image-title" data-td-id="{{product.id}}">
-                                                            <a href="{{ product.product.get_absolute_url }}" class="img-responsive m-b-15">
-                                                                <img  src="{{ product.poster.url }}" style="width: 150px;" alt="">
-                                                            </a>
-                                                        </td>
-                                                    {% endfor %}
-                                                
-                                                </tr>
-                                                <tr>
-                                                    <td class="first-column">Товар</td>
-                                                    {% for product in product_list %}
-                                                        <td class="product-image-title" data-td-id="{{product.id}}">
-                                                            <a href="{{ product.product.get_absolute_url }}" class="title">{{ product.product.title}}</a>
-                                                        </td>
-                                                    {% endfor %}
-                                                
-                                                </tr>
-                                                
-                                                <tr>
-                                                    <td class="first-column">Цена</td>
-                                                    {% for product in product_list %}
-                                                        <td class="pro-price" data-td-id="{{product.id}}">{{product.price_per_item}}</td>
-                                                    {% endfor %}
-                                                </tr>
-                                                
-                                                <tr>
-                                                    <td class="first-column">Шт.</td>
-                                                    {% for product in product_list %}
-                                                        <td class="pro-addtocart" data-td-id="{{product.id}}">
-                                                            <div class="product-quantity align-items-center">
-                                                                <form class='product-basket-number' action="{% url 'basket_adding' %}">
-                                                                    <input 
-                                                                        type="number" 
-                                                                        id="number" 
-                                                                        value="{{product.nmb}}" 
-                                                                        name="number" 
-                                                                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                                                                        data-id="{{product.id}}"
-                                                                        data-img="{{product.poster.url}}"
-                                                                        data-price="{{product.price_per_item}}"
-                                                                    >
-                                                                        
-                                                                </form>
-                                                            </div>
-                                                        </td>
-                                                        
-                                                    {% endfor %}
-                                                    </form>
-                                                </tr>
-                                                <tr>
-                                                    <td class="first-column">Сумма</td>
-                                                    {% for product in product_list %}
-                                                        <td class="pro-stock" data-td-id="{{product.id}}">{{product.total_price}}</td>
-                                                    {% endfor %}
-                                                </tr>
-                                                <tr>
-                                                    <td class="first-column">Удалить</td>
-                                                    {% for product in product_list %}
-                                                        <td class="pro-remove" data-td-id="{{product.id}}">
-                                                            <form action="{% url 'basket_adding' %}" method="POST">
-                                                                <button 
-                                                                    class="product-basket-detail-del"
-                                                                    data-id="{{product.id}}">
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                </button>
-                                                            </form> 
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="first-column">Изображение</td>
+                                                {% for product in product_list %}
+                                                    <td class="product-image-title" data-td-id="{{product.id}}">
+                                                        <a href="{{ product.product.get_absolute_url }}" class="img-responsive m-b-15">
+                                                            <img  src="{{ product.poster.url }}" style="width: 150px;" alt="">
+                                                        </a>
                                                     </td>
-                                                    {% endfor %}
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    
+                                                {% endfor %}
+                                            </tr>
+                                            <tr>
+                                                <td class="first-column">Товар</td>
+                                                {% for product in product_list %}
+                                                    <td class="product-image-title" data-td-id="{{product.id}}">
+                                                        <a href="{{ product.product.get_absolute_url }}" class="title">{{ product.product.title}}</a>
+                                                    </td>
+                                                {% endfor %}
+                                            </tr>
+                                            <tr>
+                                                <td class="first-column">Цена</td>
+                                                {% for product in product_list %}
+                                                    <td class="pro-price" data-td-id="{{product.id}}">{{product.price_per_item}}</td>
+                                                {% endfor %}
+                                            </tr>
+                                            <tr>
+                                                <td class="first-column">Шт.</td>
+                                                {% for product in product_list %}
+                                                    <td class="pro-addtocart" data-td-id="{{product.id}}">
+                                                        <div class="product-quantity align-items-center">
+                                                            <form class='product-basket-number' action="{% url 'basket_adding' %}">
+                                                                <input type="number" id="number" name="number" value="{{product.nmb}}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
+                                                                    data-id="{{product.id}}"
+                                                                    data-img="{{product.poster.url}}"
+                                                                    data-price="{{product.price_per_item}}">
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                {% endfor %}
+                                                </form>
+                                            </tr>
+                                            <tr>
+                                                <td class="first-column">Сумма</td>
+                                                {% for product in product_list %}
+                                                    <td class="pro-stock" data-td-id="{{product.id}}">{{product.total_price}}</td>
+                                                {% endfor %}
+                                            </tr>
+                                            <tr>
+                                                <td class="first-column">Удалить</td>
+                                                {% for product in product_list %}
+                                                    <td class="pro-remove" data-td-id="{{product.id}}">
+                                                        <form action="{% url 'basket_adding' %}" method="POST">
+                                                            <button 
+                                                                class="product-basket-detail-del"
+                                                                data-id="{{product.id}}">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </button>
+                                                        </form> 
+                                                    </td>
+                                                {% endfor %}
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                                 <!-- End Compare Table -->
                                 {% endif %}
-
                                 <!-- Start empty-cart-->
                                 <template id='custom-empty-cart'>
                                     {% include 'include/empty-cart.html' %}
@@ -116,7 +96,6 @@
                         </div>
                     </div>
                 </div>
-
                 {% if products_total_nmb != 0 %}
                     <div id="delete-button-order" class="empty-cart m-t-40 text-center">
                         <div class="empty-cart-icon title--large">
@@ -124,14 +103,9 @@
                             <a href="{% url 'checkout' %}" class="btn btn--box btn--large btn--radius btn--green btn--green-hover-black btn--uppercase font--semi-bold m-t-20">Оформить заказ</a>
                         </div>
                     </div>
-                {% else %}
-                    
                 {% endif %}
             </div>
         </div>
-      
-                    
-               
-    </main> <!-- ::::::  End  Main Container Section  ::::::  -->
-
+    </main>
+    <!-- ::::::  End  Main Container Section  ::::::  -->
 {% endblock content %}

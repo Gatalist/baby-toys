@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Contact, Mailing
 from .tasks import send_mailing_all
 
+
 # Register your models here.
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
@@ -16,5 +17,5 @@ class MailingAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         obj.save()
-        tast = obj.id
-        return send_mailing_all.delay(tast)
+        task = obj.id
+        return send_mailing_all.delay(task)

@@ -1,4 +1,6 @@
 import datetime
+from django_product.settings import COUNT_DAY
+
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -16,7 +18,7 @@ def get_session_key(request):
 
 def range_date():
     start_date = datetime.date.today()
-    end_date = start_date + datetime.timedelta(days=-14)
+    end_date = start_date + datetime.timedelta(days=-COUNT_DAY)
 
     start_date_split = str(start_date).split('-')
     end_date_split = str(end_date).split('-')

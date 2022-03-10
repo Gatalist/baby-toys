@@ -1,7 +1,7 @@
 from django import template
-from product.models import Category, Product, Rating, Reviews, News
-# from datetime import date
 import datetime
+from product.models import Category, Product, Reviews, News
+from django_product.settings import COUNT_DAY, COUNT_LAST_PRODUCT, COUNT_LAST_REVIEW, COUNT_LAST_NEWS
 
 
 register = template.Library()
@@ -18,7 +18,7 @@ def show_menu():
 @register.inclusion_tag("product/tags/last_product.html")
 def get_last_product():
     all_product = Product.objects.filter(draft=True).order_by('-id')
-    product = all_product[:8]
+    product = all_product[:COUNT_LAST_PRODUCT]
     print(product)
     return {"last_products": product}
 
@@ -27,7 +27,7 @@ def get_last_product():
 @register.inclusion_tag("product/tags/last_review.html")
 def get_last_review():
     all_review = Reviews.objects.all().order_by('-id')
-    review = all_review[:8]
+    review = all_review[:COUNT_LAST_REVIEW]
     print(review)
     return {"last_reviews": review}
 
@@ -36,7 +36,7 @@ def get_last_review():
 @register.inclusion_tag("product/tags/last_news.html")
 def get_last_news():
     all_news = News.objects.filter(draft=True).order_by('-id')
-    news = all_news[:8]
+    news = all_news[:COUNT_LAST_NEWS]
     print(news)
     return {"last_news": news}
 
@@ -44,7 +44,7 @@ def get_last_news():
 @register.simple_tag()
 def get_date_list_menu():
     now_date = datetime.date.today()
-    last_days = 14
+    last_days = COUNT_DAY
     dateList = []
 
     for x in range (0, last_days):

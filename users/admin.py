@@ -1,15 +1,13 @@
 from django.contrib import admin
+from .models import OrderStatus, ProductInOrder, Order, ProductInBasket, ProductInLikes
 from django.utils.safestring import mark_safe
-from .models import OrderStatus, ProductInBasket, ProductInOrder, Order, ProductInLikes
 
-class ProductInOrderInline(admin.TabularInline):
-    model = ProductInOrder
-    extra = 0
 
 class ProductInOrderInline(admin.TabularInline):
     model = ProductInOrder
     extra = 0
     readonly_fields = ("product", "nmb", "price_per_item", "total_price",)
+
 
 @admin.register(OrderStatus)
 class StatusAdmin(admin.ModelAdmin):
@@ -23,33 +21,33 @@ class OrderAdmin(admin.ModelAdmin):
     list_display_links = ("status",)
 
     inlines = [ProductInOrderInline, ]
-    
+
 
 # @admin.register(ProductInOrder)
 # class ProductInOrderAdmin(admin.ModelAdmin):
 #     list_display = ("order", "product", "nmb", "price_per_item", "total_price", "created", "updated")
 #     list_display_links = ("product",)
 #     # readonly_fields = ("order", "product", "price_per_item", "total_price",)
-
-
+#
+#
 # @admin.register(ProductInBasket)
 # class ProductInBasketAdmin(admin.ModelAdmin):
 #     list_display = ("id", "session_key", "product", "nmb", "price_per_item", "total_price", "created", "updated")
 #     list_display_links = ("session_key",)
-#     readonly_fields = ("get_image", "session_key", "nmb", "price_per_item", "total_price", "order", "product", "poster")
-
+#     readonly_fields = ("get_image", "session_key", "nmb", "price_per_item", "total_price","order","product","poster")
+#
 #     def get_image(self, obj):
 #         return mark_safe(f'<img src="{obj.poster.url}" width="50" height="auto">')
-
+#
 #     get_image.short_description = "Миниатюра"
-
-
-@admin.register(ProductInLikes)
-class ProductInBasketAdmin(admin.ModelAdmin):
-    list_display = ("id", "session_key", "product", "created", "updated")
-    list_display_links = ("session_key",)
-
-    def get_image(self, obj):
-        return mark_safe(f'<img src="{obj.poster.url}" width="50" height="auto">')
-
-    get_image.short_description = "Миниатюра"
+#
+#
+# @admin.register(ProductInLikes)
+# class ProductInBasketAdmin(admin.ModelAdmin):
+#     list_display = ("id", "session_key", "product", "created", "updated")
+#     list_display_links = ("session_key",)
+#
+#     def get_image(self, obj):
+#         return mark_safe(f'<img src="{obj.poster.url}" width="50" height="auto">')
+#
+#     get_image.short_description = "Миниатюра"

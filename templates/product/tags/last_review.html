@@ -1,13 +1,23 @@
 {% load static %}
 
-{% for review in last_reviews %}
+{% if last_reviews.count > 0 %}
+    {% for review in last_reviews %}
+        <div class="testimonial__content--slider ">
+            <div class="testimonial__single">
+                <div class="testimonial__info">
+                    <img class="testimonial__info--user" src="{% static 'image/user.png' %}" alt="">
+                    <h5 class="testimonial__info--desig m-t-20">{{review.name}} </h5>
+                </div>
+                <p class="testimonial__desc">{{review.text}}</p>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
     <div class="testimonial__content--slider ">
         <div class="testimonial__single">
-            <p class="testimonial__desc">{{review.text}}</p>
             <div class="testimonial__info">
-                <img class="testimonial__info--user" src="{% static 'img/banner/review.jpg' %}" alt="">
-                <h5 class="testimonial__info--desig m-t-20">{{review.name}} </h5>
+                <h5 class="testimonial__info--desig m-t-20">Нет отзывов</h5>
             </div>
         </div>
     </div>
-{% endfor %}
+{% endif %}

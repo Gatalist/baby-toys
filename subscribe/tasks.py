@@ -2,6 +2,7 @@ from django_product.celery import app
 from django_product.service_email import email, email_all_user
 from .models import Mailing, Contact
 
+
 @app.task
 def send_mailing(usser_email):
     title = "Игрульки от Ирульки"
@@ -23,4 +24,3 @@ def send_mailing_all(task_id):
             to_email = user.email
 
             email_all_user(title, message, to_email)
-    

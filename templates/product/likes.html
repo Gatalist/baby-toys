@@ -1,21 +1,16 @@
 {% extends 'product/base.html' %}
-
 {% load static %}
 
 {% block content %}
-
     <!-- ::::::  Start  Main Container Section  ::::::  -->
     <main id="main-container" class="main-container">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    
                     {% include 'include/main_baner.html' %}
-
                     <div class="section-content" style="margin-top: 30px; margin-bottom: 30px; border-bottom: 2px solid #666;">
                         <h5 class="section-content__title">Избраные товары</h5>
                     </div>
-
                     {% if products_likes_nmb == 0 %}
                         {% include 'include/like-cart.html' %}
                     {% else %}
@@ -35,7 +30,7 @@
                                 {% for product in product_list %}
                                 <tr>
                                     <td class="product-thumbnail">
-                                        <a href="{{ product.product.get_absolute_url }}"><img class="img-fluid" src="{{ product.product.poster.url }}" alt=""></a>
+                                        <a href="{{ product.product.get_absolute_url }}"><img style="height: 270px;" src="{{ product.product.poster.url }}" alt=""></a>
                                     </td>
                                     <td class="product-name">
                                         <a href="{{ product.product.get_absolute_url }}">{{ product.product.title }}</a>
@@ -47,7 +42,6 @@
                                             <span class="amount">{{ product.product.retail }}</span>
                                         {% endif %}
                                     </td>
-                                    
                                     <td class="pro-remove">
                                         <form action="{% url 'product_likes' %}">
                                             {% csrf_token %}
@@ -59,7 +53,6 @@
                                             </button>
                                         </form>
                                     </td>
-                                    
                                     <td class="product-add-cart">
                                         <form action="{% url 'basket_adding' %}">
                                             {% csrf_token %}
@@ -72,10 +65,8 @@
                                                 class="product-card-likes-add btn btn--box btn--small btn--radius btn--green btn--green-hover-black btn--uppercase font--semi-bold">Добавить в корзину</button>
                                         </form>    
                                     </td>
-                                    
                                 </tr>
                                 {% endfor %}
-                               
                             </tbody>
                         </table>
                     </div>  <!-- End Wishlist Table -->
@@ -84,9 +75,9 @@
                     <template id='custom-like-cart'>
                         {% include 'include/like-cart.html' %}
                     </template>
-                    <!-- END like-cart-->
                 </div>
             </div>
         </div>
-    </main> <!-- ::::::  End  Main Container Section  ::::::  -->
+    </main> 
+    <!-- ::::::  End  Main Container Section  ::::::  -->
 {% endblock content %}

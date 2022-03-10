@@ -1,25 +1,22 @@
-
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-
 from .models import Category, Product, Reviews, ProductImage, Status, Rating, RatingStar, ImageHome
-
-# from mptt.admin import MPTTModelAdmin
+from django import forms
 from mptt.admin import DraggableMPTTAdmin
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
-# admin.site.register(Categorys, DraggableMPTTAdmin)
 
-admin.site.register(
-    Category, 
-    DraggableMPTTAdmin,
-    list_display=(
-        'tree_actions',
-        'indented_title',
-    ),
-     list_display_links=(
-        'indented_title',
-    ),
-)
+admin.site.register(Category, DraggableMPTTAdmin, list_display=('tree_actions', 'indented_title',),
+                    list_display_links=('indented_title',), prepopulated_fields={"slug": ("name",)}
+                    )
+
+
+class ProductAdminForm(forms.ModelForm):
+    description = forms.CharField(label='Описание', widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Product
+        fields = '__all__'
 
 
 @admin.register(ImageHome)
@@ -36,7 +33,6 @@ class ImageHomeAdmin(admin.ModelAdmin):
     get_image.short_description = "Миниатюра"
 
 
-
 admin.site.title = "Admin panel - сайта"
 admin.site.site_header = "Admin panel - сайта"
 
@@ -49,16 +45,13 @@ class ReviewInline(admin.TabularInline):
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
-    extra = 1
+    extra = 0
     readonly_fields = ("get_image", )
 
     def get_image(self, obj):
         return mark_safe(f'<img src={obj.image.url} width="50" height="auto">')
 
     get_image.short_description = "Изображение"
-
-    readonly_fields = ("get_image", )
-  
 
 
 @admin.register(Product)
@@ -73,11 +66,9 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ("draft",)
     prepopulated_fields = {"slug": ("title",)}
 
-    # form = ProductAdminForm
-
     def get_image(self, obj):
         return mark_safe(f'<img src={obj.poster.url} width="50" height="auto">')
-    
+
     get_image.short_description = "Изображение"
 
     readonly_fields = ("get_image", "persent",)
@@ -135,7 +126,7 @@ class ProductAdmin(admin.ModelAdmin):
             "fields": (("description",),)
         }),
     )
-    
+
     inlines = [ProductImageInline, ReviewInline, ]
 
     def unpublish(self, request, queryset):
@@ -162,7 +153,6 @@ class ProductAdmin(admin.ModelAdmin):
 
         self.message_user(request, f"{message_bit}")
 
-
     publish.short_description = "Опубликовать"
     publish.allowed_permissions = ('change', )
 
@@ -180,7 +170,6 @@ class ProductImageAdmin(admin.ModelAdmin):
         return mark_safe(f'<img src="{obj.image.url}" width="50" height="auto">')
 
     get_image.short_description = "Изображение"
-
 
 
 @admin.register(Reviews)

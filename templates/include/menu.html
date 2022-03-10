@@ -4,12 +4,9 @@
 <div class="header-menu">
     <nav>
         <ul class="header__nav">
-            <!--Start Single Nav link-->
             <li class="header__nav-item pos-relative">
-                <a href="{% url 'index' %}" class="header__nav-link">Главная</a>
-            </li> <!-- End Single Nav link-->
-
-            <!--Start Single Nav link-->
+                <a href="{% url 'index' %}" {%if '' in request.path %} style="color:#89c74a;" {%endif%} class="header__nav-link">Главная</a>
+            </li>
             <li class="header__nav-item pos-relative">
                 <a href="#" class="header__nav-link">Каталог<i class="fal fa-chevron-down"></i></a>
                 <!--Single Dropdown Menu-->
@@ -28,12 +25,11 @@
                             {% endif %}
                         </li>
                     {% endrecursetree %}
-                </ul> <!--Single Dropdown Menu-->
-            </li> <!-- End Single Nav link-->
-
-            <!--Start Single Nav link-->
+                </ul> 
+                <!--Single Dropdown Menu-->
+            </li>
             <li class="header__nav-item pos-relative">
-                <a href="#" class="header__nav-link">Новинки <i class="fal fa-chevron-down"></i></a>
+                <a href="#" class="header__nav-link">Новинки<i class="fal fa-chevron-down"></i></a>
                 <span class="menu-label menu-label--blue">New</span>
                 <!--Single Dropdown Menu-->
                 <ul class="dropdown__menu pos-absolute">
@@ -47,18 +43,14 @@
                         </li>
                     {% endfor %} 
                 </ul>
-
                 <!--Single Dropdown Menu-->
-            </li> <!-- End Single Nav link-->
-
-            <!--Start Single Nav link-->
+            </li>
             <li class="header__nav-item pos-relative">
-                    <a href="{% url 'news' %}" class="header__nav-link">Новости</a>
-            </li> <!-- End Single Nav link-->
-            <!--Start Single Nav link-->
+                <a href="{% url 'news' %}" {%if 'news' in request.path %} style="color:#89c74a;" {%endif%} class="header__nav-link">Новости</a>
+            </li>
             <li class="header__nav-item pos-relative">
-                <a href="" class="header__nav-link">О нас</a>
-        </li> <!-- End Single Nav link-->
+                <a href="{% url 'about' %}" {%if 'about' in request.path %} style="color:#89c74a;" {%endif%} class="header__nav-link">О нас</a>
+            </li>
         </ul>
     </nav>
 </div> 

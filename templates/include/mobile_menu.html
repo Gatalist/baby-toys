@@ -9,14 +9,11 @@
     <div class="offcanvas-inner">
         <!-- Start Search -->
         {% include "include/search.html" %}
-        <!-- End Search -->
         <!-- Start Mobile User Action -->
         <ul class="header__user-action-icon m-tb-15 text-center">
             <!-- Start like_basket -->
             {% include "include/like_basket.html" %}
-            <!-- End like_basket -->
         </ul>
-        <!-- End Mobile User Action -->
         <div class="offcanvas-menu">
             <ul>
                 <li><a href="{% url 'index' %}"><span>Главная</span></a></li>
@@ -51,7 +48,7 @@
                     </ul>
                 </li>
                 <li><a href="{% url 'news' %}">Новости</a></li>
-                <li><a href="">О нас</a></li>
+                <li><a href="{% url 'about' %}">О нас</a></li>
             </ul>
         </div>
     </div>

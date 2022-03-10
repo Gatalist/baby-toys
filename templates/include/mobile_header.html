@@ -7,7 +7,7 @@
                     <li>
                         <div class="header__mobile-logo">
                             <a href="{% url 'index' %}" class="header__mobile-logo-link">
-                                <img src="{% static 'img/logo/logo-2.png' %}" alt="" class="header__mobile-logo-img">
+                                <img src="{% static 'image/logo/logo-2.png' %}" alt="" class="header__mobile-logo-img">
                             </a>
                         </div>
                     </li>
@@ -16,14 +16,12 @@
                 <ul class="header__mobile--rightside header__user-action-icon  d-flex align-items-center justify-content-end"> 
                     <!-- Start like_basket -->
                     {% include "include/like_basket.html" %}
-                    <!-- End like_basket -->
                     <li>
                         <a href="#offcanvas-mobile-menu" class="offcanvas-toggle">
                             <i class="far fa-bars"></i>
                         </a>
                     </li>
-
-                </ul>   <!-- End User Action -->
+                </ul>
             </div>
         </div>
         

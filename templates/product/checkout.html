@@ -1,17 +1,12 @@
-
 {% extends 'product/base.html' %}
-
 {% load static %}
 
 {% block content %}
-
     <!-- ::::::  Start  Main Container Section  ::::::  -->
     <main id="main-container" class="main-container">
         <div class="container">
             <div class="row">
-                <div class="section-content" style="margin-top: 30px; margin-bottom: 30px; border-bottom: 2px solid #666;">
-                   
-                </div>
+                <div class="section-content" style="margin-top: 30px; margin-bottom: 30px; border-bottom: 2px solid #666;"></div>
                 <!-- Start Client Shipping Address -->
                 <div class="col-lg-7">
                     <div class="section-content">
@@ -38,7 +33,6 @@
                                     <input type="text" name="{{form.city.html_name}}" value="{{request.POST.city}}" id="city">
                                 </div>
                             </div>
-                            
                             <div class="col-md-6">
                                 <div class="form-box__single-group">
                                     <label for="form-phone">Телефон</label>
@@ -53,14 +47,12 @@
                                     <input class="form-control" type="email" name="{{form.email.html_name}}" value="{{request.POST.email}}" id="email">
                                 </div>
                             </div>
-                            
                         </div>
                         <div class="text-center" style="margin-top: 30px;">
                             <button class="btn btn--small btn--radius btn--green btn--green-hover-black btn--uppercase font--bold" type="submit">Оформить заказ</button>
                         </div>
                     </form> 
-                </div> <!-- End Client Shipping Address -->
-                
+                </div>
                 <!-- Start Order Wrapper -->
                 <div class="col-lg-5">
                     <div class="your-order-section">
@@ -80,19 +72,17 @@
                                             <span class="your-order-middle-right font--semi-bold">{{product.total_price}} грн</span>
                                         </li>
                                     {% endfor %}
-                                    
                                 </ul>
                                 <div class="your-order-bottom d-flex justify-content-between">
                                     <h5 class="your-order-total-left font--bold">Сумма заказа</h5>
                                     <h5 class="your-order-total-right font--bold">{{order_sum}} грн</h5>
                                 </div>
-                               
                             </div>
                         </div>
-                        
                     </div>
-                </div> <!-- End Order Wrapper -->
+                </div>
             </div>
         </div>
-    </main> <!-- ::::::  End  Main Container Section  ::::::  -->
+    </main> 
+    <!-- ::::::  End  Main Container Section  ::::::  -->
 {% endblock content %}

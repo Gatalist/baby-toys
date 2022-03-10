@@ -1,0 +1,73 @@
+{% extends 'product/base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- ::::::  Start  Main Container Section  ::::::  -->
+    <main id="main-container" class="main-container">
+        <div class="about-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="about-img">
+                            <div class="img-responsive">
+                                <img src="{% static 'image/about.jpg' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="about-content">
+                            <h4 class="font--regular">Мы ориентированные на предоставление лучших игрушек и удобство для пользователей</h4>
+                            <p class="para__text">"Baby toys" уже более 3 лет поставляет игрушки по всей территории Украины. Мы поставляем и продаем отличные игрушки.</p>
+                            <p class="para__text">Мы производим прямые закупки товара, а также имеем прочные давние связи с ведущими производителями Украины, Китая. Ассортимент нашей компании насчитывает более 2 000 наименований игрушек. Ежемесячно мы обновляем ассортимент – самого актуального и востребованного на рынке товара.</p>
+                            <p class="para__text">Оптовые клиенты для того, чтобы получить консультацию по ассортименту, обсудить условия сотрудничества, выбрать оптимальный для Вас способ доставки и сделать заказ, могут воспользоваться удобным для Вас способом связи.</p>
+                            <p class="para__text">Мы внимательно следим за всеми новинками и изменениями рынка и делаем все возможное, чтобы работа с нами приносила нашим клиентам максимальные успехи в их бизнесе.</p>
+                            <a href="{% url 'category_list' %}" class="btn btn--icon-left btn--small btn--radius btn--transparent btn--border-green btn--border-green-hover-green font--regular text-capitalize m-t-20">В каталог<i class="fal fa-angle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>         
+        </div>
+        <!-- ::::::  Start CMS Section  ::::::  -->
+        <div class="cms m-t-100">
+            <div class="container">
+                <div class="row">
+                    <!-- Start Single CMS box -->
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="cms__content">
+                            <div class="cms__icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <div class="cms__text">
+                                <h6 class="cms__title">Отправка новой почтой</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Start Single CMS box -->
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="cms__content">
+                            <div class="cms__icon">
+                                <i class="far fa-money-bill-alt"></i>
+                            </div>
+                            <div class="cms__text">
+                                <h6 class="cms__title">Наложенный платёж</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Start Single CMS box -->
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="cms__content">
+                            <div class="cms__icon">
+                                <i class="far fa-life-ring"></i>
+                            </div>
+                            <div class="cms__text">
+                                <h6 class="cms__title">Персональный менеджер</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <!-- ::::::  End CMS Section  ::::::  -->
+    </main> 
+    <!-- ::::::  End  Main Container Section  ::::::  -->
+{% endblock content %}

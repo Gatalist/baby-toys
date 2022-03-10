@@ -6,7 +6,6 @@
     *****************************/
     var $window = $(window),
         $body = $('body');
-
      /**********************
      * Sticky Menu
      ***********************/
@@ -18,8 +17,6 @@
             $(".sticky-header").addClass("is-sticky");
         }
     });
-
-
     /*****************************
     * Off Canvas Function
     *****************************/
@@ -47,8 +44,6 @@
             $mobileMenuToggle.find('a').removeClass('close');
         });
     })();
-
-
     /**************************
      * Offcanvas: Menu Content
      **************************/
@@ -79,8 +74,6 @@
         });
     }
     mobileOffCanvasMenu();
-
-
     /**********************
      * Vertical Menu
      ***********************/
@@ -148,9 +141,6 @@
                 },
             ]
         });
-
-
-
     /************************************************
      * Product Slider - Style: Default [4 Grid, 2 Rows]
      ***********************************************/
@@ -201,7 +191,6 @@
         prevArrow: '<button type="button" class="default-slider__arrow default-slider__arrow--left prevArrow"><i class="far fa-chevron-left"></button>',
         nextArrow: '<button type="button"  class="default-slider__arrow default-slider__arrow--right nextArrow"><i class="far fa-chevron-right"></button>',
         responsive: [
-
             {
                 breakpoint: 1200,
                 settings: {
@@ -235,8 +224,6 @@
         prevArrow: '<button type="button" class="default-slider__arrow default-slider__arrow--left prevArrow"><i class="far fa-chevron-left"></button>',
         nextArrow: '<button type="button"  class="default-slider__arrow default-slider__arrow--right nextArrow"><i class="far fa-chevron-right"></button>',
     });
-        
-
     /************************************************
      * Blog Slider - Style: Feed [3 Grid, 1 Rows]
      ***********************************************/
@@ -248,7 +235,6 @@
         prevArrow: '<button type="button" class="default-slider__arrow default-slider__arrow--left prevArrow"><i class="far fa-chevron-left"></button>',
         nextArrow: '<button type="button"  class="default-slider__arrow default-slider__arrow--right nextArrow"><i class="far fa-chevron-right"></button>',
         responsive: [
-
             {
                 breakpoint: 1470,
                 settings: {
@@ -279,8 +265,6 @@
             }
         ]
     });
-
-
     /************************************************
      * Company logo Slider
      ***********************************************/
@@ -341,7 +325,7 @@
         slidesToScroll: 1,
         focusOnSelect: true,
         prevArrow: '<button type="button" class="gallery__nav gallery__nav-horizontal gallery__nav-horizontal--left prevArrow"><i class="fas fa-chevron-left"></i></button>',
-        nextArrow: '<button type="button"  class="gallery__nav gallery__nav-horizontal gallery__nav-horizontal--right nextArrow"><i class="fas fa-chevron-right"></i></button>'
+        nextArrow: '<button type="button" class="gallery__nav gallery__nav-horizontal gallery__nav-horizontal--right nextArrow"><i class="fas fa-chevron-right"></i></button>'
     });
     /***********************************
     * Gallery - Vertical 
@@ -360,8 +344,6 @@
         prevArrow: '<button type="button" class="gallery__nav gallery__nav-vertical gallery__nav-vertical--up prevArrow"><i class="fas fa-chevron-up"></i></button>',
         nextArrow: '<button type="button"  class="gallery__nav gallery__nav-vertical gallery__nav-vertical--down nextArrow"><i class="fas fa-chevron-down"></i></button>'
     });
-
-
     /***********************************
     * Gallery - Slider 
     ************************************/
@@ -386,7 +368,7 @@
                     slidesToShow: 2,
                     arrows: false,
                     autoplay: true,
-                    infinite: true,
+                    // infinite: true,
                 }
             },
             {
@@ -395,7 +377,7 @@
                     slidesToShow: 1,
                     arrows: false,
                     autoplay: true,
-                    infinite: true,
+                    // infinite: true,
                 }
             }
         ]
@@ -424,7 +406,6 @@
         prevArrow: '<button type="button" class="inner-slider__arrow inner-slider__arrow--left prevArrow"><i class="far fa-chevron-left"></i></button>',
         nextArrow: '<button type="button"  class="inner-slider__arrow inner-slider__arrow--right nextArrow"><i class="far fa-chevron-right"></i></button>',
         responsive: [
-
             {
                 breakpoint: 992,
                 settings: {
@@ -467,25 +448,6 @@
       }
     });
 
-
-  /********************************
-  *  Product Gallery - Image Zoom
-  **********************************/
-  $("#img-zoom").elevateZoom({
-        gallery: "gallery-zoom",
-        galleryActiveClass: "zoom-active",
-        containLensZoom: true,
-        zoomType: "inner",
-        cursor: "crosshair"
-    });
-
-
-    /*******************
-     * Video Popup
-     *******************/
-    $('.vinobox-popup').venobox();
-
-
     /*****************************
     *   Countdown
     **************************** */
@@ -507,8 +469,6 @@
     $(".shipping-account").on("click", function () {
       $(".open-shipping-account").slideToggle(1000);
     });
-
-
     /****************************
     * Password Hide/ Show Toggle
     *****************************/
@@ -522,8 +482,6 @@
           input.attr("type", "password");
         }
       });
-
-
     /****************************
     * Accordian - FAQ
     *****************************/
@@ -549,32 +507,8 @@
       });
     });
     
-
-    /****************************
-    * Google Map - Location
-    *****************************/
-   function init() {
-    var mapOptions = {
-        zoom: 11,
-        scrollwheel: false,
-        center: new google.maps.LatLng(40.709896, -73.995481),
-    };
-    var mapElement = document.getElementById('map');
-    var map = new google.maps.Map(mapElement, mapOptions);
-    var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(40.709896, -73.995481),
-        map: map,
-        icon: 'assets/img/icon/map-point.png',
-        animation:google.maps.Animation.BOUNCE,
-        title: 'Snazzy!'
-    });
-    }
-    // google.maps.event.addDomListener(window, 'load', init);
-
     /*----------------------------------
         Scroll To Top Active
     -----------------------------------*/
     $('body').materialScrollTop();
-
-
 })(jQuery);

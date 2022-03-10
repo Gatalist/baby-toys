@@ -1,0 +1,14 @@
+<div class="page-breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <ul class="page-breadcrumb__menu">
+                    <li class="page-breadcrumb__nav"><a href="{% url 'index' %}">Главная</a></li>
+                    <li class="page-breadcrumb__nav"><a href="{% url 'category_list' %}">Категории</a></li>
+                    <li class="page-breadcrumb__nav"><a href="{{product.category.get_absolute_url}}">{{product.category}}</a></li>
+                    <li class="page-breadcrumb__nav active">{{product.title}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

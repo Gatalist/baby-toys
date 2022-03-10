@@ -2,7 +2,6 @@ from django.db import models
 from product.models import Product
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
-# from utils.main import disable_for_loaddata
 
 
 class OrderStatus(models.Model):
@@ -20,8 +19,9 @@ class OrderStatus(models.Model):
 
 
 class Order(models.Model):
-    user = models.ForeignKey(User, verbose_name="Пользователь", blank=True, null=True, default=None, on_delete=models.CASCADE)
-    status = models.ForeignKey(OrderStatus, verbose_name="Статус", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, verbose_name="Пользователь", blank=True, null=True, default=None,
+                             on_delete=models.SET_NULL)
+    status = models.ForeignKey(OrderStatus, verbose_name="Статус", blank=True, null=True, on_delete=models.SET_NULL)
     firstname = models.CharField("Имя", max_length=50, blank=True, null=True, default=None)
     lastname = models.CharField("Фамилия", max_length=50, blank=True, null=True, default=None)
     email = models.EmailField("Email", blank=True, null=True, default=None)
@@ -29,7 +29,7 @@ class Order(models.Model):
     city = models.CharField("Город", max_length=50, blank=True, null=True, default=None)
     created = models.DateTimeField("Создан", auto_now_add=True, auto_now=False)
     updated = models.DateTimeField("Обновлен", auto_now_add=False, auto_now=True)
-    total_price = models.FloatField("Сумма заказа", default=0)#total price for all products in order
+    total_price = models.FloatField("Сумма заказа", default=0)  # total price for all products in order
 
     def __str__(self):
         return f"№:{self.id}"
@@ -44,11 +44,13 @@ class Order(models.Model):
 
 
 class ProductInOrder(models.Model):
-    order = models.ForeignKey(Order, verbose_name="Заказ", blank=True, null=True, default=None, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, verbose_name="Товар", blank=True, null=True, default=None, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, verbose_name="Заказ", blank=True, null=True, default=None,
+                              on_delete=models.SET_NULL)
+    product = models.ForeignKey(Product, verbose_name="Товар", blank=True, null=True, default=None,
+                                on_delete=models.SET_NULL)
     nmb = models.IntegerField("Количество", default=1)
     price_per_item = models.FloatField("Цена", default=0)
-    total_price = models.FloatField("Сумма", default=0)  #price*nmb
+    total_price = models.FloatField("Сумма", default=0)  # price * nmb
     created = models.DateTimeField("Создан", auto_now_add=True, auto_now=False)
     updated = models.DateTimeField("Обновлен", auto_now_add=False, auto_now=True)
 
@@ -59,14 +61,11 @@ class ProductInOrder(models.Model):
         verbose_name = 'Товар в заказе'
         verbose_name_plural = 'Товары в заказе'
 
-
     def save(self, *args, **kwargs):
         price_per_item = self.product.retail
         self.price_per_item = price_per_item
         self.total_price = self.nmb * price_per_item
-
         super(ProductInOrder, self).save(*args, **kwargs)
-
 
 
 # @disable_for_loaddata
@@ -87,11 +86,13 @@ post_save.connect(product_in_order_post_save, sender=ProductInOrder)
 
 class ProductInBasket(models.Model):
     session_key = models.CharField("Ключ сессии", max_length=128, blank=True, null=True, default=None)
-    order = models.ForeignKey(Order, verbose_name="Заказ", blank=True, null=True, default=None, on_delete=models.PROTECT)
-    product = models.ForeignKey(Product, verbose_name="Товар", blank=True, null=True, default=None, on_delete=models.PROTECT)
+    order = models.ForeignKey(Order, verbose_name="Заказ", blank=True, null=True, default=None,
+                              on_delete=models.SET_NULL)
+    product = models.ForeignKey(Product, verbose_name="Товар", blank=True, null=True, default=None,
+                                on_delete=models.SET_NULL)
     nmb = models.IntegerField("Количество", default=0)
     price_per_item = models.FloatField("Цена за единицу", default=0)
-    total_price = models.FloatField("Сумма заказа", default=0)#price*nmb
+    total_price = models.FloatField("Сумма заказа", default=0)  # price * nmb
     created = models.DateTimeField("Создан", auto_now_add=True, auto_now=False)
     updated = models.DateTimeField("Обновлен", auto_now_add=False, auto_now=True)
     poster = models.ImageField("Изображение", blank=True, null=True, default=None)
@@ -103,7 +104,6 @@ class ProductInBasket(models.Model):
         verbose_name = 'Товар в корзине'
         verbose_name_plural = 'Товары в корзине'
 
-
     def save(self, *args, **kwargs):
         if self.product.sale:
             price_per_item = self.product.sale
@@ -111,13 +111,13 @@ class ProductInBasket(models.Model):
             price_per_item = self.product.retail
         self.price_per_item = price_per_item
         self.total_price = int(self.nmb) * price_per_item
-
         super(ProductInBasket, self).save(*args, **kwargs)
 
 
 class ProductInLikes(models.Model):
     session_key = models.CharField("Ключ сессии", max_length=128, blank=True, null=True, default=None)
-    product = models.ForeignKey(Product, verbose_name="Товар", blank=True, null=True, default=None, on_delete=models.PROTECT)
+    product = models.ForeignKey(Product, verbose_name="Товар", blank=True, null=True, default=None,
+                                on_delete=models.SET_NULL)
     created = models.DateTimeField("Создан", auto_now_add=True, auto_now=False)
     updated = models.DateTimeField("Обновлен", auto_now_add=False, auto_now=True)
 

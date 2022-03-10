@@ -1,23 +1,30 @@
-{% for news in last_news %}
-    <!-- Start Single Blog Feed -->
-    <div class="blog-feed">
-        <!-- Start Blog Feed Image -->
-        <div class="blog-feed__img-box">
-            <a href="{{news.get_absolute_url}}" class="blog-feed__img--link">
-                <img class="img-fluid" src="{{news.poster.url}}" alt="">
-            </a>
-        </div> <!-- End  Blog Feed Image -->
-        <!-- Start  Blog Feed Content -->
-        <div class="blog-feed__content ">
-            <a href="{{news.get_absolute_url}}" class="blog-feed__link">{{news.title}}</a>
-            
-            <div class="blog-feed__post-meta">
-                <a class="blog-feed__post-meta--link"><span class="blog-feed__post-meta--author">Admin /</span></a>
-                <a class="blog-feed__post-meta--link"><span class="blog-feed__post-meta--date">{{news.dateAdd}}</span></a>
-            </div>
-            <p class="blog-feed__excerpt">{{news.description_free}}</p>
-            <a href="{{news.get_absolute_url}}" class="btn btn--small btn--radius btn--green btn--green-hover-black font--regular text-uppercase text-capitalize">Подробнее</a>
-        </div> <!-- End  Blog Feed Content -->
-    </div> 
-    <!-- End Single Blog Feed -->
-{% endfor %}
+{% if last_news.count > 0 %}
+    {% for news in last_news %}
+        <!-- Start Single Blog Feed -->
+        <div class="blog-feed">
+            <!-- Start Blog Feed Image -->
+            <div class="blog-feed__img-box" style="width: 270px; height: 0 auto;">
+                <a href="{{news.get_absolute_url}}" class="blog-feed__img--link">
+                    <img src="{{news.poster.url}}" alt="">
+                </a>
+            </div> <!-- End  Blog Feed Image -->
+            <!-- Start  Blog Feed Content -->
+            <div class="blog-feed__content ">
+                <a href="{{news.get_absolute_url}}" class="blog-feed__link">{{news.title}}</a>
+                <div class="blog-feed__post-meta">
+                    <a class="blog-feed__post-meta--link"><span class="blog-feed__post-meta--author">Admin /</span></a>
+                    <a class="blog-feed__post-meta--link"><span class="blog-feed__post-meta--date">{{news.dateAdd}}</span></a>
+                </div>
+                <p class="blog-feed__excerpt">{{news.description_free}}</p>
+                <a href="{{news.get_absolute_url}}" class="btn btn--small btn--radius btn--green btn--green-hover-black font--regular text-uppercase text-capitalize">Подробнее</a>
+            </div> <!-- End  Blog Feed Content -->
+        </div> 
+        <!-- End Single Blog Feed -->
+    {% endfor %}
+{% else %}
+    <div class="product__box product__default--single text-center">
+        <div class="product__content m-t-20">
+            <a class="product__link">Нет новостей</a>
+        </div>
+    </div>
+{% endif %}

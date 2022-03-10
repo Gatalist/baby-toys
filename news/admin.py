@@ -9,8 +9,6 @@ class NewsAdmin(admin.ModelAdmin):
     list_display = ("id", "title", "get_image", "draft",)
     list_display_links = ("title",)
     list_editable = ("draft",)
-
-
     prepopulated_fields = {"slug": ("title",)}
 
     def get_image(self, obj):

@@ -1,47 +1,57 @@
-{% for product in last_products %}
-    <!-- Start Single Default Product -->
-    <div class="product__box product__default--single text-center">
-        <!-- Start Product Image -->
-        <div class="product__img-box  pos-relative">
-            <a href="{{product.get_absolute_url}}" class="product__img--link">
-                <img class="product__img img-fluid" src="{{ product.poster.url }}" alt="">
-            </a>
-            <!-- Start Procuct Label -->
-            {% if product.persent and product.status %}
-                <span class="product__label product__label--sale-out" style='margin-left:70px'>{{ product.status }}</span>
-                <span class="product__label product__label--sale-dis">{{product.persent}}%</span>
-            {% else %}
-                {% if product.persent %}
-                    <span class="product__label product__label--sale-dis">{{ product.persent }}%</span>
-                {% endif %}
-                {% if product.status %}
-                    <span class="product__label product__label--sale-out">{{ product.status }}</span>
-                {% endif %}
-            {% endif %}  
-            <!-- End Procuct Label -->  
-            <ul class="product__action--link pos-absolute">
-               
-                <li><a href="{{product.get_absolute_url}}" ><i class="icon-eye"></i></a></li>
-            </ul>                                              
-        </div> <!-- End Product Image -->
-        
-        <!-- Start Product Content -->
-        <div class="product__content m-t-20">
-            <ul class="product__review">
-                <li class="product__review--fill"><i class="icon-star"></i></li>
-                <li class="product__review--fill"><i class="icon-star"></i></li>
-                <li class="product__review--fill"><i class="icon-star"></i></li>
-                <li class="product__review--fill"><i class="icon-star"></i></li>
-                <li class="product__review--blank"><i class="icon-star"></i></li>
-            </ul>
-            <a href="{{product.get_absolute_url}}" class="product__link">{{ product.title }}</a>
-            <div class="product__price m-t-5">
-                {% if product.sale %}
-                    <span class="product__price">{{ product.sale }} грн <del>{{product.retail}} грн</del></span>
+{% if last_products.count > 0 %}
+    {% for product in last_products %}
+        <!-- Start Single Default Product -->
+        <div class="product__box product__default--single text-center">
+            <!-- Start Product Image -->
+            <div class="product__img-box  pos-relative">
+                <a href="{{product.get_absolute_url}}" class="product__img--link">
+                    <img class="product__img img-fluid" src="{{ product.poster.url }}" alt="">
+                </a>
+                <!-- Start Procuct Label -->
+                {% if product.persent and product.status %}
+                    <span class="product__label product__label--sale-out" style='margin-left:70px'>{{ product.status }}</span>
+                    <span class="product__label product__label--sale-dis">{{product.persent}}%</span>
                 {% else %}
-                    <span class="product__price">{{ product.retail }} грн</span>
-                {% endif %}
+                    {% if product.persent %}
+                        <span class="product__label product__label--sale-dis">{{ product.persent }}%</span>
+                    {% endif %}
+                    {% if product.status %}
+                        <span class="product__label product__label--sale-out">{{ product.status }}</span>
+                    {% endif %}
+                {% endif %}  
+                <!-- End Procuct Label -->  
+                <ul class="product__action--link pos-absolute">
+                    <li><a href="{{product.get_absolute_url}}"><i class="icon-eye"></i></a></li>
+                </ul>                                              
             </div>
-        </div> <!-- End Product Content -->
-    </div> <!-- End Single Default Product -->
-{% endfor %}
+            <!-- End Product Image -->
+            <!-- Start Product Content -->
+            <div class="product__content m-t-20">
+                <ul class="product__review">
+                    <span>
+                        {% for rating in product.get_rating.star_on %}
+                            <label class="rating_on"></label>
+                        {% endfor %}
+                        {% for rating in product.get_rating.star_off %}
+                            <label class="rating_off"></label>
+                        {% endfor %}  
+                    </span>
+                </ul>
+                <a href="{{product.get_absolute_url}}" class="product__link">{{ product.title }}</a>
+                <div class="product__price m-t-5">
+                    {% if product.sale %}
+                        <span class="product__price">{{ product.sale }} грн <del>{{product.retail}} грн</del></span>
+                    {% else %}
+                        <span class="product__price">{{ product.retail }} грн</span>
+                    {% endif %}
+                </div>
+            </div> <!-- End Product Content -->
+        </div> <!-- End Single Default Product -->
+    {% endfor %}
+{% else %}
+    <div class="product__box product__default--single text-center">
+        <div class="product__content">
+            <p class="product__link">Нет товаров</p>
+        </div>
+    </div>
+{% endif %}

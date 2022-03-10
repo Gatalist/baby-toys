@@ -1,5 +1,4 @@
 {% extends 'product/base.html' %}
-
 {% load contact_tags %}
 {% load include_tag %}
 {% load static %}
@@ -38,12 +37,9 @@
                         </div>
                     </div>
                 </div>
-            </div> 
-            <!-- End Single Hero Slide -->
+            </div>
             {% endfor %}
-        </div> 
-        <!-- ::::::  End Hero Section  ::::::  -->
-
+        </div>
         <!-- ::::::  Start  Product Style - Default Section  ::::::  -->
         <div class="product m-t-100">
             <div class="container">
@@ -53,58 +49,49 @@
                         <div class="section-content section-content--border m-b-35">
                             <h5 class="section-content__title">Новинки</h5>
                             <a href="{% url 'all_new' %}" class="btn btn--icon-left btn--small btn--radius btn--transparent btn--border-green btn--border-green-hover-green font--regular text-capitalize">Все новинки<i class="fal fa-angle-right"></i></a>
-                        </div>  <!-- End Section Title -->
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="default-slider default-slider--hover-bg-red product-default-slider">
                             <div class="product-default-slider-4grid-1rows gap__col--30 gap__row--40">
-
                                 {% get_last_product %}
-                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> 
-        <!-- ::::::  End  Product Style - Default Section  ::::::  -->
-
+        </div>
         <!-- ::::::  Start  Blog News  ::::::  -->
-        <div class="blog m-t-100" style="margin-top: 100px">
+        <div class="blog m-t-100" style="margin-top: 110px">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                         <!-- Start Section Title -->
+                        <!-- Start Section Title -->
                         <div class="section-content section-content--border m-b-35">
                             <h5 class="section-content__title">Последние новости</h5>
                             <a href="{% url 'news' %}" class="btn btn--icon-left btn--small btn--radius btn--transparent btn--border-green btn--border-green-hover-green font--regular text-capitalize">Все новости <i class="fal fa-angle-right"></i></a>
-                        </div>  <!-- End Section Title -->
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="default-slider default-slider--hover-bg-red">
                             <div class="blog-feed-slider-3grid default-slider gap__col--30 ">
-                                
                                 {% get_last_news %}
-                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> 
-        <!-- ::::::  End  Blog News   ::::::  -->
-
+        </div>
         <!-- ::::::  Start Testimonial Section  ::::::  -->
-        <div class="newsletter m-t-100 pos-relative">
+        <div class="newsletter pos-relative">
             <div class="testimonial__bg">
-                <img src="{% static 'img/review.jpg' %}" alt="">
-                
+                <img src="{% static 'image/review.jpg' %}" alt="">
             </div>
-            <div class="testimonial__content pos-absolute absolute-center text-center">
+            <div class="testimonial__content pos-absolute absolute-center text-center" style="margin-top: -50px">
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
@@ -112,21 +99,17 @@
                                 <h2>Отзывы клиентов!</h2>
                             </div>
                             <div class="testimonial__slider default-slider">
-                                
                                 {% get_last_review %}
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> 
-        <!-- ::::::  End Testimonial Section  ::::::  -->
-
+        </div>
         <!-- ::::::  Start Newsletter Section  ::::::  -->
-        <div class="newsletter m-t-100 pos-relative">
+        <div class="newsletter pos-relative">
             <div class="newsletter__bg">
-                <img src="{% static 'img/2.jpg' %}" alt="">
+                <img src="{% static 'image/subscribe.jpg' %}" alt="">
             </div>
             <div class="newsletter__content pos-absolute absolute-center text-center">
                 <div class="container">
@@ -137,16 +120,12 @@
                             </div>
                         </div>
                         <div class="col-10 offset-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-                           
                             {% contact_form %}
-
                         </div>
                     </div>
                 </div>
             </div>
-        </div> 
-        <!-- ::::::  End newsletter Section  ::::::  -->
-
-    </main>  <!-- :::::: End MainContainer Wrapper :::::: -->
-
+        </div>
+    </main>
+    <!-- :::::: End MainContainer Wrapper :::::: -->
 {% endblock content %}
